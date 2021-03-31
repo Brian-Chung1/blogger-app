@@ -58,19 +58,19 @@ const register = async (req, res, next) => {
 
     if (!emailRegex.test(email)) {
       return res.status(400).json({
-        error: 'Invalid email address',
+        error: 'invalid email address',
       });
     }
 
     if (!usernameRegex.test(username)) {
       return res.status(400).json({
-        error: 'Invalid Username Format',
+        error: 'invalid username format',
       });
     }
 
     if (!passwordRegex.test(password)) {
       return res.status(400).json({
-        error: 'Invalid Password Format',
+        error: 'invalid password format',
       });
     }
 

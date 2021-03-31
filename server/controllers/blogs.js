@@ -6,7 +6,9 @@ const config = require('../utils/config');
 
 const getAll = async (req, res, next) => {
   try {
-    const blogs = await Blog.find({});
+    const blogs = await Blog.find({}).populate('likedUsers', {
+      username: 1,
+    });
     res.status(200).json(blogs);
   } catch (err) {
     next(err);
@@ -15,7 +17,9 @@ const getAll = async (req, res, next) => {
 
 const getIdBlog = async (req, res, next) => {
   try {
-    const blog = await Blog.findById(req.params.id);
+    const blog = await Blog.findById(req.params.id).populate('likedUsers', {
+      username: 1,
+    });
     if (!blog) {
       return res
         .status(404)
@@ -96,8 +100,14 @@ const likeBlog = async (req, res, next) => {
 
     const user = await User.findById(decodedToken.id);
     const blog = await Blog.findById(req.params.id);
+
+    if (!blog) {
+      return res.status(404).json({ error: 'invalid id' });
+    }
+
     const currentLikes = blog.likes;
 
+    //If the user has already liked the blog - unlike
     if (user.likedBlogs.includes(blog.id)) {
       const updatedLikedUsers = blog.likedUsers.filter(
         (u) => u._id.toString() !== user._id.toString()
@@ -117,6 +127,7 @@ const likeBlog = async (req, res, next) => {
 
       await user.save();
       res.status(200).json(updatedBlog.toJSON());
+      //If the user has not liked the blog yet - like
     } else {
       const updatedLikedUsers = blog.likedUsers.concat(user._id);
 
@@ -165,6 +176,10 @@ const commentBlog = async (req, res, next) => {
     const user = await User.findById(decodedToken.id);
     const blog = await Blog.findById(req.params.id);
 
+    if (!blog) {
+      return res.status(404).json({ error: 'invalid id' });
+    }
+
     const newComment = {
       comment: comment,
       timestamp: new Date(),
@@ -194,23 +209,31 @@ const commentBlog = async (req, res, next) => {
 };
 
 const editBlog = async (req, res, next) => {
-  const decodedToken = jwt.verify(req.token, process.env.ACCESS_TOKEN_SECRET);
+  try {
+    const decodedToken = jwt.verify(req.token, process.env.ACCESS_TOKEN_SECRET);
 
-  if (!req.token || !decodedToken.id) {
-    return res.status(401).json({ error: 'Invalid token' });
-  }
+    if (!req.token || !decodedToken.id) {
+      return res.status(401).json({ error: 'Invalid token' });
+    }
 
-  const user = await User.findById(decodedToken.id);
-  const blog = await Blog.findById(req.params.id);
+    const user = await User.findById(decodedToken.id);
+    const blog = await Blog.findById(req.params.id);
 
-  if (blog.authorId.toString() === user._id.toString()) {
-    const content = req.body;
-    const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, content, {
-      new: true,
-    });
-    res.json(updatedBlog.toJSON());
-  } else {
-    return res.status(401).json({ error: 'Unauthorized' });
+    if (!blog) {
+      return res.status(404).json({ error: 'invalid id' });
+    }
+
+    if (blog.authorId.toString() === user._id.toString()) {
+      const content = req.body;
+      const updatedBlog = await Blog.findByIdAndUpdate(req.params.id, content, {
+        new: true,
+      });
+      res.json(updatedBlog.toJSON());
+    } else {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+  } catch (err) {
+    next(err);
   }
 };
 

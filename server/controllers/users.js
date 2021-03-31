@@ -60,7 +60,7 @@ const getUsernameUser = async (req, res, next) => {
     if (!user) {
       return res
         .status(404)
-        .json({ error: 'This User does not exist - invalid id' });
+        .json({ error: 'This User does not exist - invalid username' });
     } else {
       res.json(user.toJSON());
     }
