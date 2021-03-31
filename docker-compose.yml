@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  client:
+    image: client
+    container_name: client-container
+    build:
+      context: ./client
+    depends_on:
+      - api-server
+    ports:
+      - 3000:3000
+
+  api-server:
+    image: server
+    build: ./server
+    ports:
+      - '3001:3001'
+    environment:
+      - PORT=3001
+    env_file:
+      - ./server/.env
+    restart: on-failure

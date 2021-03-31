@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14-slim 
 
 WORKDIR /app
 
@@ -12,8 +12,6 @@ RUN if [ "$NODE_ENV" = "development" ]; \
 
 COPY . ./
 
-ENV PORT 3001
-
-EXPOSE $PORT
+EXPOSE 3001
 
 CMD [ "node", "index.js" ]
