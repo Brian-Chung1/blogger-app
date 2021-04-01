@@ -1,6 +1,4 @@
 [build]
-  base = "blogger-app/client"
-  publish = "blogger-app/client/build" 
   command = "CI= npm run build"
 
 [[redirects]]
