@@ -19,9 +19,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: create env file
-        run: npm ci
-        run: npm test
+      - run: npm ci
+      - run: npm test
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
