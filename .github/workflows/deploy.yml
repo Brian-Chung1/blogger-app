@@ -14,6 +14,8 @@ jobs:
   tests:
     name: Testing Backend
     runs-on: ubuntu-latest
+    env:
+      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v1
@@ -21,5 +23,3 @@ jobs:
           node-version: 14
       - run: npm ci
       - run: npm test
-        env:
-          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
