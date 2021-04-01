@@ -14,12 +14,19 @@ jobs:
   tests:
     name: Testing Backend
     runs-on: ubuntu-latest
-    env:
-      TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - name: Get Code
+        uses: actions/checkout@v2
+
+      - name: Use Node v14
+        uses: actions/setup-node@v1
         with:
           node-version: 14
-      - run: npm ci
-      - run: npm test
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm test
+        env:
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
