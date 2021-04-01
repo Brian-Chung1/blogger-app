@@ -20,7 +20,7 @@ jobs:
         with:
           node-version: 14
       - name: create env file
-      - run: npm ci
+        run: npm ci
         run: npm test
         env:
           MONGODB_URI: ${{ secrets.MONGODB_URI }}
