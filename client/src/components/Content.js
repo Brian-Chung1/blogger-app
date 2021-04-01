@@ -9,7 +9,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Content = ({ blogs, handleLikes, user }) => {
+const Content = ({ blogs, handleLikes, user, inProfile }) => {
   const classes = useStyles();
 
   return (
@@ -25,6 +25,7 @@ const Content = ({ blogs, handleLikes, user }) => {
               blog={blog}
               handleLikes={handleLikes}
               checkUserLiked={liked}
+              inProfile={inProfile}
             />
           </Grid>
         );

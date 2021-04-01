@@ -24,12 +24,14 @@ const getIdUser = async (req, res, next) => {
         content: 1,
         likes: 1,
         created: 1,
+        author: 1,
       })
       .populate('likedBlogs', {
         title: 1,
         content: 1,
         likes: 1,
         created: 1,
+        author: 1,
       });
 
     if (!user) {
@@ -46,16 +48,21 @@ const getIdUser = async (req, res, next) => {
 
 const getUsernameUser = async (req, res, next) => {
   try {
-    const user = await User.findOne({ username: req.params.username }).populate(
-      'blogs',
-      {
+    const user = await User.findOne({ username: req.params.username })
+      .populate('blogs', {
         title: 1,
         content: 1,
         likes: 1,
         created: 1,
         author: 1,
-      }
-    );
+      })
+      .populate('likedBlogs', {
+        title: 1,
+        content: 1,
+        likes: 1,
+        created: 1,
+        author: 1,
+      });
     if (!user) {
       return res
         .status(404)

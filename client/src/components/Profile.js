@@ -10,6 +10,11 @@ import Avatar from '@material-ui/core/Avatar';
 import { Typography } from '@material-ui/core';
 import { dateFormatter, usernameColor } from '../utils/index';
 import Content from './Content';
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const useStyles = makeStyles((theme) => ({
   loading: {
@@ -26,22 +31,31 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     marginTop: theme.spacing(4),
+    padding: theme.spacing(2),
   },
   testing: {
     border: '1px solid red',
   },
+  filter: {
+    width: theme.spacing(20),
+  },
 }));
-//TODO -- User Not Found
+
 const Profile = ({ handleLikes }) => {
   const classes = useStyles();
   const [user, setUser] = useState(null);
   const [exist, setExist] = useState(true);
   const { dispatchNotification } = useNotification();
+  const [filter, setFilter] = useState('Posts');
   const match = useRouteMatch('/user/:username');
-
+  console.log(user);
   useEffect(() => {
     getUser();
   }, [match.params.username]);
+
+  const handleChange = (e) => {
+    setFilter(e.target.value);
+  };
 
   const getUser = async () => {
     try {
@@ -95,7 +109,27 @@ const Profile = ({ handleLikes }) => {
             <Typography variant="h6">{`Total Posts: ${blogs.length}`}</Typography>
           </div>
         </Paper>
-        <Content blogs={blogs} handleLikes={handleLikes} />
+        <FormControl className={classes.filter}>
+          <InputLabel id="filter-label">Filter</InputLabel>
+          <Select
+            labelId="select-filter"
+            id="select"
+            value={filter}
+            onChange={handleChange}
+          >
+            <MenuItem value={'Posts'}>Posts</MenuItem>
+            <MenuItem value={'Liked'}>Liked Posts</MenuItem>
+          </Select>
+        </FormControl>
+        {filter === 'Posts' ? (
+          <Content blogs={blogs} handleLikes={handleLikes} inProfile={true} />
+        ) : (
+          <Content
+            blogs={likedBlogs}
+            handleLikes={handleLikes}
+            inProfile={true}
+          />
+        )}
       </Grid>
 
       <Grid item xs={false} sm={2} />

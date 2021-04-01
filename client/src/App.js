@@ -50,6 +50,7 @@ const App = () => {
         const blogs = await blogService.getAllBlogs();
         setBlogs(blogs);
       } catch (err) {
+        setBlogs([]);
         console.error(err);
       }
     };
@@ -126,6 +127,7 @@ const App = () => {
                     blogs={blogs}
                     handleLikes={handleLikes}
                     user={user}
+                    inProfile={false}
                   />
                 </Route>
                 <Route path="/blogs/:id">

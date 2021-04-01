@@ -25,7 +25,7 @@ const Footer = () => {
   return (
     <footer className={classes.footer}>
       <Container maxWidth="sm" className={classes.centered}>
-        <IconButton href={'https://github.com/Brian-Chung1/blog-app-frontend'}>
+        <IconButton href={'https://github.com/Brian-Chung1/blogger-app'}>
           <GitHubIcon />
         </IconButton>
         <IconButton href={'https://www.linkedin.com/in/brian-chung-a2a72b196/'}>

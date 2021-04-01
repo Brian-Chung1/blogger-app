@@ -62,7 +62,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BlogCard = ({ blog, handleLikes, checkUserLiked }) => {
+export const BlogCard = ({ blog, handleLikes, checkUserLiked, inProfile }) => {
   let history = useHistory();
   const classes = useStyles();
   const { dispatchNotification } = useNotification();
@@ -99,20 +99,40 @@ export const BlogCard = ({ blog, handleLikes, checkUserLiked }) => {
     history.push(`/user/${author}`);
   };
 
+  const getProperURL = (link) => {
+    let temp = link.split('/');
+    return temp[0] + '//' + temp[1] + temp[2] + '/';
+  };
+
   const share = (e) => {
     e.stopPropagation();
     e.preventDefault();
-    const link = window.location.href;
+    let link = window.location.href;
+    if (link.charAt(link.length - 1) !== '/') {
+      link = getProperURL(link);
+    }
     navigator.clipboard.writeText(`${link}blogs/${id}`);
     setNotification('success', 'Copied link to clipboard!');
   };
 
   const like = () => {
+    if (inProfile) {
+      const link = getProperURL(window.location.href);
+      history.replace('');
+      history.push(`blogs/${id}`);
+      return;
+    }
     handleLikes(id);
     setNotification('success', 'Liked blog post');
   };
 
   const unlike = () => {
+    if (inProfile) {
+      const link = getProperURL(window.location.href);
+      history.replace('');
+      history.push(`blogs/${id}`);
+      return;
+    }
     handleLikes(id);
     setNotification('info', 'Unliked blog post');
   };
