@@ -22,21 +22,4 @@ jobs:
       - run: npm ci
       - run: npm test
         env:
-          MONGODB_URI: ${{ secrets.MONGODB_URI }}
-
-  push_to_registry:
-    name: Pushing to Registry
-    runs-on: ubuntu-latest
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Build and Push Docker Image
-        uses: mr-smithers-excellent/docker-build-push@v5
-        with:
-          image: brianchungcs/blogger-app
-          tags: latest
-          registry: https://index.docker.io/v2/
-          directory: server
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}

@@ -6,7 +6,7 @@ const Blog = require('../models/blog');
 const User = require('../models/user');
 const Token = require('../models/token');
 const api = supertest(app);
-const config = require('../utils/config');
+require('dotenv').config();
 
 let accessToken;
 let userId;
@@ -14,7 +14,7 @@ let userId;
 beforeAll(async () => {
   //Connecting to MongoDB (testing database)
   try {
-    await mongoose.connect(config.MONGODB_URI, {
+    await mongoose.connect(process.env.TEST_MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,

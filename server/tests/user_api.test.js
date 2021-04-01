@@ -5,15 +5,15 @@ const app = require('../app');
 const Blog = require('../models/blog');
 const User = require('../models/user');
 const api = supertest(app);
-const config = require('../utils/config');
 const Token = require('../models/token');
 const Notification = require('../models/notification');
+require('dotenv').config();
 
 let user;
 
 beforeAll(async () => {
   try {
-    await mongoose.connect(config.MONGODB_URI, {
+    await mongoose.connect(process.env.TEST_MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: false,
