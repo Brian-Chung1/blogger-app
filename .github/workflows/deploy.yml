@@ -23,12 +23,13 @@ jobs:
 
   push_to_registry:
     name: Pushing to Registry
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-        name: Check out code
+      - name: Check out code
+        uses: actions/checkout@v2
 
-      - uses: mr-smithers-excellent/docker-build-push@v5
-        name: Build & push Docker image
+      - name: Build and Push Docker Image
+        uses: mr-smithers-excellent/docker-build-push@v5
         with:
           image: brianchungcs/blogger-app
           tags: v1, latest
