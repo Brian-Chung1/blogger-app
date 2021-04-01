@@ -1,5 +1,6 @@
 [build]
-base = client/
+base = "/client"
+publish = "/client/build" 
 command = "CI= npm run build"
 
 [[redirects]]
