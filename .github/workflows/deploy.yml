@@ -10,23 +10,17 @@ defaults:
   run:
     working-directory: server
 
+env:
+  TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+
 jobs:
   tests:
     name: Testing Backend
     runs-on: ubuntu-latest
     steps:
-      - name: Get Code
-        uses: actions/checkout@v2
-
-      - name: Use Node v14
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
         with:
           node-version: 14
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run Tests
-        run: npm test
-        env:
-          TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+      - run: npm ci
+      - run: npm test
