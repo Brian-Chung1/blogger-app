@@ -10,6 +10,11 @@ defaults:
   run:
     working-directory: server
 
+env:
+  TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+  ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+  REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+
 jobs:
   tests:
     name: Testing Backend
@@ -19,11 +24,5 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 14
-      - name: create env file
-        run: |
-          touch .env
-          echo TEST_MONGODB_URI = ${{ secrets.TEST_MONGODB_URI }} >> .env
-          echo ACCESS_TOKEN_SECRET = ${{ secrets.ACCESS_TOKEN_SECRET }} >> .env
-          echo REFRESH_TOKEN_SECRET = ${{ secrets.REFRESH_TOKEN_SECRET }} >> .env
       - run: npm ci
       - run: npm test
