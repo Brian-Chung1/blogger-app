@@ -162,6 +162,8 @@ describe('user attributes', () => {
   });
 
   test('user notifications', async () => {
+    await Notification.deleteMany({});
+
     const newBlog = {
       title: 'new blog',
       content: 'new blog',
@@ -204,8 +206,10 @@ describe('user attributes', () => {
       `/api/user/id/${user.id}/notification/${notifications[1].id}`
     );
 
-    const userInDb = await api.get('/api/user/test');
-    expect(userInDb.body.notifications).toHaveLength(0);
+    const userInDbNotifications = await api.get(
+      `/api/user/id/${user.id}/notification`
+    );
+    expect(userInDbNotifications.body.notifications).toHaveLength(0);
   });
 });
 

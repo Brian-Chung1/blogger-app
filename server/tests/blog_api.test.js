@@ -444,5 +444,3 @@ describe('put: edit blogs', () => {
 afterAll(() => {
   mongoose.connection.close();
 });
-
-//npm test -- tests/blog_api.test.js

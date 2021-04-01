@@ -46,7 +46,6 @@ const getIdUser = async (req, res, next) => {
 
 const getUsernameUser = async (req, res, next) => {
   try {
-    console.log(req.params);
     const user = await User.findOne({ username: req.params.username }).populate(
       'blogs',
       {

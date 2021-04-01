@@ -17,6 +17,8 @@ const notificationsInDb = async () => {
   return notifications.map((notification) => notification.toJSON());
 };
 
+//npm test -- tests/blog_api.test.js
+
 module.exports = {
   blogsInDb,
   usersInDb,
