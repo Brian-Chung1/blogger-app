@@ -20,11 +20,10 @@ jobs:
         with:
           node-version: 14
       - name: create env file
-        run: |
-          touch .env
-          echo MONGODB_URI =${{ secrets.MONGODB_URI }} >> .env
       - run: npm ci
       - run: npm test
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
 
   push_to_registry:
     name: Pushing to Registry
