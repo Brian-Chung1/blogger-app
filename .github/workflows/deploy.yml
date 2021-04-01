@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          repository: blogger-app/server
+          repository: blogger-app/tree/master/server
           path: server
           ref: master
       - uses: actions/setup-node@v1
@@ -29,6 +29,8 @@ jobs:
       - name: Check out code
         uses: actions/checkout@v2
         with:
+          repository: blogger-app/tree/master/server
+          path: server
           ref: master
 
       - name: Build and Push Docker Image
