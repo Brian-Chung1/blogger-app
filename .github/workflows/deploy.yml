@@ -6,16 +6,16 @@ on:
   pull_request:
     branches: [master]
 
+defaults:
+  run:
+    working-directory: server
+
 jobs:
   tests:
     name: Testing Backend
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          repository: blogger-app/server
-          path: server
-          ref: master
       - uses: actions/setup-node@v1
         with:
           node-version: 14
@@ -28,10 +28,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v2
-        with:
-          repository: blogger-app/server
-          path: server
-          ref: master
 
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v5
@@ -39,7 +35,6 @@ jobs:
           image: brianchungcs/blogger-app
           tags: latest
           registry: https://index.docker.io/v2/
-          dockerfile: server/Dockerfile
           directory: server
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
