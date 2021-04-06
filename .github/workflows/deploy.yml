@@ -15,8 +15,8 @@ env:
   ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
   REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
 
-# —— Run Tests on API-Server —————————————————————————————————————————————
 jobs:
+  # —— Run Tests on API-Server —————————————————————————————————————————————
   tests:
     name: Testing Backend
     runs-on: ubuntu-latest
@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm test
   # —— Build Image and Push to Dockerhub —————————————————————————————————————————————
-  docker:
+  push to dockerhub:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -62,4 +62,23 @@ jobs:
           context: ./nginx
           push: true
           tags: brianchungcs/blogger-app-nginx:latest
-# —— Deploy: Send Dockerrun.aws.json to Elastic Beanstalk —————————————————————————————————————————————
+  # —— Deploy: Send Dockerrun.aws.json to Elastic Beanstalk —————————————————————————————————————————————
+  deploy to elastic beanstalk:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v1
+
+      - name: Generate deployment package
+        run: zip deploy.zip ./Dockerrun.aws.json
+
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v16
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: blogger-app
+          environment_name: Bloggerapp-env
+          version_label: 1
+          region: us-west-1
+          deployment_package: deploy.zip

@@ -9,9 +9,16 @@ const middleware = require('./utils/middleware');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3001',
+//     credentials: true,
+//   })
+// );
+
 app.use(
   cors({
-    origin: 'http://localhost:3001',
+    origin: 'http://blogger.us-west-1.elasticbeanstalk.com/',
     credentials: true,
   })
 );
