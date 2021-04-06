@@ -28,7 +28,7 @@ jobs:
       - run: npm ci
       - run: npm test
   # —— Build Image and Push to Dockerhub —————————————————————————————————————————————
-  push to dockerhub:
+  dockerhub:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -63,7 +63,7 @@ jobs:
           push: true
           tags: brianchungcs/blogger-app-nginx:latest
   # —— Deploy: Send Dockerrun.aws.json to Elastic Beanstalk —————————————————————————————————————————————
-  deploy to elastic beanstalk:
+  elb:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source code
