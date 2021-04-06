@@ -71,7 +71,6 @@ jobs:
 
       - name: Generate deployment package
         run: zip -r deploy.zip ../Dockerrun.aws.json -x '*.git*'
-      #        run: zip deploy.zip ../Dockerrun.aws.json
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v16
@@ -82,4 +81,4 @@ jobs:
           environment_name: Bloggerapp-env
           version_label: 1
           region: us-west-1
-          deployment_package: deploy.zip
+          deployment_package: ../deploy.zip
