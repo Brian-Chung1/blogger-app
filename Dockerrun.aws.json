@@ -1,0 +1,35 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "nginx",
+      "image": "brianchungcs/blogger-app-nginx",
+      "hostname": "nginx",
+      "essential": true,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80
+        }
+      ],
+      "links": ["client", "server"],
+      "memory": 100
+    },
+    {
+      "name": "client",
+      "image": "brianchungcs/blogger-app-client",
+      "hostname": "client",
+      "essential": false,
+      "memory": 300,
+      "memoryReservation": 128
+    },
+    {
+      "name": "server",
+      "image": "brianchungcs/blogger-app-server",
+      "hostname": "server",
+      "essential": false,
+      "memory": 300,
+      "memoryReservation": 128
+    }
+  ]
+}

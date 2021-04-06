@@ -10,7 +10,24 @@ defaults:
   run:
     working-directory: server
 
+env:
+  TEST_MONGODB_URI: ${{ secrets.TEST_MONGODB_URI }}
+  ACCESS_TOKEN_SECRET: ${{ secrets.ACCESS_TOKEN_SECRET }}
+  REFRESH_TOKEN_SECRET: ${{ secrets.REFRESH_TOKEN_SECRET }}
+
+# —— Run Tests on API-Server —————————————————————————————————————————————
 jobs:
+  tests:
+    name: Testing Backend
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14
+      - run: npm ci
+      - run: npm test
+  # —— Build Image and Push to Dockerhub —————————————————————————————————————————————
   docker:
     runs-on: ubuntu-latest
     steps:
@@ -25,9 +42,24 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+      - name: build and push server image
         uses: docker/build-push-action@v2
         with:
           context: ./server
           push: true
-          tags: brianchungcs/blogger-app:latest
+          tags: brianchungcs/blogger-app-server:latest
+
+      - name: build and push client image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./client
+          push: true
+          tags: brianchungcs/blogger-app-client:latest
+
+      - name: build and push nginx image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./nginx
+          push: true
+          tags: brianchungcs/blogger-app-nginx:latest
+# —— Deploy: Send Dockerrun.aws.json to Elastic Beanstalk —————————————————————————————————————————————

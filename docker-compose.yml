@@ -1,22 +1,35 @@
 version: '3.3'
 services:
+  nginx:
+    restart: always
+    build:
+      dockerfile: Dockerfile
+      context: ./nginx
+    ports:
+      - 80:80
+
   client:
     image: client
-    container_name: client-container
     build:
       context: ./client
-    depends_on:
-      - api-server
-    ports:
-      - 3000:3000
+      dockerfile: Dockerfile
+    #    ports:
+    #      - 3000:3000
+    restart: on-failure
+    volumes:
+      - /app/node_modules
+    container_name: client
 
-  api-server:
+  server:
     image: server
-    build: ./server
-    ports:
-      - '3001:3001'
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    #    ports:
+    #      - '3001:3001'
     environment:
       - PORT=3001
     env_file:
       - ./server/.env
     restart: on-failure
+    container_name: server
