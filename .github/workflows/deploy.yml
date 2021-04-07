@@ -84,4 +84,4 @@ jobs:
           environment_name: Bloggerapp-env
           version_label: test
           region: us-west-1
-          deployment_package: ./deploy.zip
+          deployment_package: ./server/deploy.zip
