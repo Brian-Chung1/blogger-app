@@ -69,11 +69,11 @@ jobs:
       - name: Checkout source code
         uses: actions/checkout@v1
 
-      - name: test
-        run: cat ../Dockerrun.aws.json
-
       - name: Generate deployment package
         run: zip -r deploy.zip ../Dockerrun.aws.json
+
+      - name: test
+        run: ls
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v16
@@ -84,4 +84,4 @@ jobs:
           environment_name: Bloggerapp-env
           version_label: test
           region: us-west-1
-          deployment_package: ../deploy.zip
+          deployment_package: ./deploy.zip
