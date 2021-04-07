@@ -73,15 +73,15 @@ jobs:
         run: zip -r deploy.zip ../Dockerrun.aws.json
 
       - name: test
-        run: ls deploy.zip
+        run: zcat deploy.zip
 
-      - name: Deploy to EB
-        uses: einaregilsson/beanstalk-deploy@v16
-        with:
-          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          application_name: blogger-app
-          environment_name: Bloggerapp-env
-          version_label: test
-          region: us-west-1
-          deployment_package: ./server/deploy.zip
+      # - name: Deploy to EB
+      #   uses: einaregilsson/beanstalk-deploy@v16
+      #   with:
+      #     aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      #     application_name: blogger-app
+      #     environment_name: Bloggerapp-env
+      #     version_label: test
+      #     region: us-west-1
+      #     deployment_package: ./server/deploy.zip
