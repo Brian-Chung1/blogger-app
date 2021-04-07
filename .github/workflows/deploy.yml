@@ -73,7 +73,7 @@ jobs:
         run: zip -r deploy.zip ../Dockerrun.aws.json
 
       - name: test
-        run: ls
+        run: ls deploy.zip
 
       - name: Deploy to EB
         uses: einaregilsson/beanstalk-deploy@v16
