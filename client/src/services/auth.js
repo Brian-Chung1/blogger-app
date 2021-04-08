@@ -3,7 +3,10 @@ import axios from 'axios';
 const baseUrl = '/auth';
 
 const authInstance = axios.create({
-  baseUrl: process.env.REACT_APP_SERVER_URL,
+  baseUrl:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3001'
+      : 'https://www.bloggers.codes',
 });
 
 const login = async (credentials) => {

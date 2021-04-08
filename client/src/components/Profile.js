@@ -48,7 +48,6 @@ const Profile = ({ handleLikes }) => {
   const { dispatchNotification } = useNotification();
   const [filter, setFilter] = useState('Posts');
   const match = useRouteMatch('/user/:username');
-  console.log(user);
   useEffect(() => {
     getUser();
   }, [match.params.username]);
@@ -63,7 +62,6 @@ const Profile = ({ handleLikes }) => {
       setUser(user);
     } catch (error) {
       setExist(false);
-      console.error(error);
       dispatchNotification({
         type: 'ADD',
         data: {
@@ -127,6 +125,7 @@ const Profile = ({ handleLikes }) => {
           <Content
             blogs={likedBlogs}
             handleLikes={handleLikes}
+            user={user}
             inProfile={true}
           />
         )}

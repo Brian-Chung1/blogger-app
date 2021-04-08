@@ -119,7 +119,7 @@ const Header = ({ notifications, handleNotificationRemoval }) => {
               onClick={() => history.push('/')}
             >
               <Typography variant="h4" className={classes.typographyStyles}>
-                BloggerTESTING
+                Blogger
               </Typography>
               <GestureIcon style={{ fontSize: 40 }} color="secondary" />
             </IconButton>

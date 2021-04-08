@@ -27,9 +27,9 @@ const login = async (req, res, next) => {
     let accessToken = await user.generateAccessToken();
 
     res.cookie('refreshToken', refreshToken, {
-      maxAge: 60 * 60 * 24 * 5,
+      maxAge: 1000 * 60 * 60 * 24 * 5,
       httpOnly: true,
-      // secure: true,
+      secure: true,
       sameSite: 'strict',
     });
     res.status(200).send({
@@ -90,9 +90,9 @@ const register = async (req, res, next) => {
     let accessToken = await user.generateAccessToken();
 
     res.cookie('refreshToken', refreshToken, {
-      maxAge: 60 * 60 * 24 * 5,
+      maxAge: 1000 * 60 * 60 * 24 * 5,
       httpOnly: true,
-      // secure: true,
+      secure: true,
       sameSite: 'strict',
     });
 

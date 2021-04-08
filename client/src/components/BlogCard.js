@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActions from '@material-ui/core/CardActions';
@@ -62,11 +62,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export const BlogCard = ({ blog, handleLikes, checkUserLiked, inProfile }) => {
+export const BlogCard = ({ blog, handleLikes, inProfile }) => {
   let history = useHistory();
   const classes = useStyles();
   const { dispatchNotification } = useNotification();
   const { user } = useContext(UserContext);
+  const [disabled, setDisabled] = useState(false);
 
   const {
     title,
@@ -104,9 +105,7 @@ export const BlogCard = ({ blog, handleLikes, checkUserLiked, inProfile }) => {
     return temp[0] + '//' + temp[1] + temp[2] + '/';
   };
 
-  const share = (e) => {
-    e.stopPropagation();
-    e.preventDefault();
+  const share = () => {
     let link = window.location.href;
     if (link.charAt(link.length - 1) !== '/') {
       link = getProperURL(link);
@@ -124,6 +123,10 @@ export const BlogCard = ({ blog, handleLikes, checkUserLiked, inProfile }) => {
     }
     handleLikes(id);
     setNotification('success', 'Liked blog post');
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    }, 1250);
   };
 
   const unlike = () => {
@@ -135,11 +138,21 @@ export const BlogCard = ({ blog, handleLikes, checkUserLiked, inProfile }) => {
     }
     handleLikes(id);
     setNotification('info', 'Unliked blog post');
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    }, 1250);
   };
 
   const nonUserRedirect = () => {
     setNotification('warning', 'Login Required');
     history.push('/login');
+  };
+
+  const checkUserLiked = () => {
+    if (inProfile) return false;
+    if (!user) return;
+    return likedUsers.includes(user.id);
   };
 
   return (
@@ -197,11 +210,12 @@ export const BlogCard = ({ blog, handleLikes, checkUserLiked, inProfile }) => {
           </Typography>
         </Button>
         <Button
-          color={checkUserLiked ? 'secondary' : 'default'}
+          color={checkUserLiked() ? 'secondary' : 'default'}
           size="large"
           className={classes.likeButton}
           startIcon={<FavoriteBorderIcon />}
-          onClick={!user ? nonUserRedirect : checkUserLiked ? unlike : like}
+          disabled={disabled}
+          onClick={!user ? nonUserRedirect : checkUserLiked() ? unlike : like}
         >
           {likes}
         </Button>

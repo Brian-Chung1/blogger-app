@@ -92,6 +92,7 @@ const BlogView = ({
   const [editBlog, setEdit] = useState(false);
   const [deleteBlog, setDelete] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [disabled, setDisabled] = useState(false);
   const open = Boolean(anchorEl);
 
   if (!blog) {
@@ -165,11 +166,19 @@ const BlogView = ({
   const like = () => {
     handleLikes(id);
     setNotification('success', 'Liked blog post');
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    }, 1250);
   };
 
   const unlike = () => {
     handleLikes(id);
     setNotification('info', 'Unliked blog post');
+    setDisabled(true);
+    setTimeout(() => {
+      setDisabled(false);
+    }, 1250);
   };
 
   const nonUserRedirect = () => {
@@ -272,6 +281,7 @@ const BlogView = ({
                 color="primary"
                 startIcon={<FavoriteIcon />}
                 className={classes.likeButton}
+                disabled={disabled}
                 onClick={
                   !user
                     ? nonUserRedirect

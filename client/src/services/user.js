@@ -2,7 +2,10 @@ import axios from 'axios';
 const baseUrl = '/api/user';
 
 const userInstance = axios.create({
-  baseUrl: process.env.REACT_APP_SERVER_URL,
+  baseUrl:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3001'
+      : 'https://www.bloggers.codes',
 });
 
 const getAllUsers = async () => {

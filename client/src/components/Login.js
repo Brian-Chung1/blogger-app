@@ -49,8 +49,8 @@ const Login = () => {
   const classes = useStyles();
   let history = useHistory();
   const { dispatchNotification } = useNotification();
-  const { setUser } = useContext(UserContext);
-
+  const { user, setUser } = useContext(UserContext);
+  console.log(user);
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -66,6 +66,18 @@ const Login = () => {
           initialValues={{ username: '', password: '', remember: false }}
           validationSchema={validationSchema}
           onSubmit={async (values) => {
+            if (user) {
+              history.push('/');
+              dispatchNotification({
+                type: 'ADD',
+                data: {
+                  open: true,
+                  severity: 'info',
+                  message: 'You must logout before logging in',
+                },
+              });
+              return;
+            }
             try {
               const user = await authService.login({
                 username: values.username,
@@ -83,12 +95,15 @@ const Login = () => {
                 },
               });
             } catch (err) {
+              const errorMessage = err.response
+                ? err.response.data.error
+                : 'Network / Server Error';
               dispatchNotification({
                 type: 'ADD',
                 data: {
                   open: true,
                   severity: 'error',
-                  message: err.response.data.error,
+                  message: errorMessage,
                 },
               });
             }
@@ -114,9 +129,9 @@ const Login = () => {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  {/* <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
+                  </Link> */}
                 </Grid>
                 <Grid item>
                   <Link

@@ -8,6 +8,8 @@ const Token = require('../models/token');
 const api = supertest(app);
 require('dotenv').config();
 
+//npm test -- tests/blog_api.test.js
+
 let accessToken;
 let userId;
 

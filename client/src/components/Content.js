@@ -9,22 +9,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Content = ({ blogs, handleLikes, user, inProfile }) => {
+const Content = ({ blogs, handleLikes, inProfile }) => {
   const classes = useStyles();
 
   return (
     <Grid className={classes.root} container spacing={3}>
       {blogs.map((blog) => {
-        let liked = false;
-        if (user && blog.likedUsers.includes(user.id)) {
-          liked = true;
-        }
         return (
           <Grid key={blog.id} item xs={12} sm={12} md={6}>
             <BlogCard
               blog={blog}
               handleLikes={handleLikes}
-              checkUserLiked={liked}
               inProfile={inProfile}
             />
           </Grid>

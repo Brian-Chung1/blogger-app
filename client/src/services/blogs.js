@@ -4,7 +4,10 @@ import { getToken } from '../utils/index';
 const baseUrl = '/api/blogs';
 
 const blogInstance = axios.create({
-  baseUrl: process.env.REACT_APP_SERVER_URL,
+  baseUrl:
+    process.env.NODE_ENV === 'development'
+      ? 'http://localhost:3001'
+      : 'https://www.bloggers.codes',
 });
 
 blogInstance.interceptors.request.use(

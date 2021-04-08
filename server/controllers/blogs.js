@@ -6,9 +6,7 @@ const config = require('../utils/config');
 
 const getAll = async (req, res, next) => {
   try {
-    const blogs = await Blog.find({}).populate('likedUsers', {
-      username: 1,
-    });
+    const blogs = await Blog.find({});
     res.status(200).json(blogs);
   } catch (err) {
     next(err);
@@ -17,9 +15,7 @@ const getAll = async (req, res, next) => {
 
 const getIdBlog = async (req, res, next) => {
   try {
-    const blog = await Blog.findById(req.params.id).populate('likedUsers', {
-      username: 1,
-    });
+    const blog = await Blog.findById(req.params.id);
     if (!blog) {
       return res
         .status(404)

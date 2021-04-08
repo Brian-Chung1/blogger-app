@@ -18,7 +18,7 @@ const cookieParser = require('cookie-parser');
 
 app.use(
   cors({
-    origin: 'http://blogger.us-west-1.elasticbeanstalk.com/',
+    origin: 'https://www.bloggers.codes',
     credentials: true,
   })
 );
