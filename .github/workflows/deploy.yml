@@ -28,11 +28,6 @@ jobs:
       - run: npm ci
       - run: npm test
       # —— Build Images and Push to Dockerhub —————————————————————————————————————————————
-      # dockerhub:
-      #   runs-on: ubuntu-latest
-      #   steps:
-      # - name: Checkout
-      #   uses: actions/checkout@v2
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -63,32 +58,26 @@ jobs:
           push: true
           tags: brianchungcs/blogger-app-nginx:latest
       # —— Deploy: Send Dockerrun.aws.json to Elastic Beanstalk —————————————————————————————————————————————
-      # elb:
-      #   runs-on: ubuntu-latest
-      #   steps:
-      # - name: Checkout source code
-      #   uses: actions/checkout@v1
+      - name: Get timestamp
+        uses: gerred/actions/current-time@master
+        id: current-time
 
-      # - name: Get timestamp
-      #   uses: gerred/actions/current-time@master
-      #   id: current-time
+      - name: Format timestamp
+        uses: frabert/replace-string-action@master
+        id: format-time
+        with:
+          pattern: '[:\.]+'
+          string: '${{ steps.current-time.outputs.time }}'
+          replace-with: '-'
+          flags: 'g'
 
-      # - name: Format timestamp
-      #   uses: frabert/replace-string-action@master
-      #   id: format-time
-      #   with:
-      #     pattern: '[:\.]+'
-      #     string: '${{ steps.current-time.outputs.time }}'
-      #     replace-with: '-'
-      #     flags: 'g'
-
-      # - name: Deploy to EB
-      #   uses: einaregilsson/beanstalk-deploy@v16
-      #   with:
-      #     aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
-      #     aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      #     application_name: blogger-app
-      #     environment_name: Bloggerapp-env
-      #     version_label: 'blogger-app-${{ steps.format-time.outputs.replaced }}'
-      #     region: us-west-1
-      #     deployment_package: Dockerrun.aws.json
+      - name: Deploy to EB
+        uses: einaregilsson/beanstalk-deploy@v16
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: blogger-app
+          environment_name: Bloggerapp-env
+          version_label: 'blogger-app-${{ steps.format-time.outputs.replaced }}'
+          region: us-west-1
+          deployment_package: Dockerrun.aws.json
