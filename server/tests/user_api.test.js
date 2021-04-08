@@ -148,7 +148,6 @@ describe('user attributes', () => {
 
     let blogInDb = await api.get(`/api/blogs/${blogId}`);
     expect(blogInDb.body.likedUsers).toHaveLength(1);
-    expect(blogInDb.body.likedUsers[0].username).toBe(user.username);
 
     await api
       .put(`/api/blogs/${blogId}/like`)
