@@ -50,7 +50,7 @@ const Login = () => {
   let history = useHistory();
   const { dispatchNotification } = useNotification();
   const { user, setUser } = useContext(UserContext);
-  console.log(user);
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
