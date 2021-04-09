@@ -1,7 +1,6 @@
 <br />
 <p align="center">
-  
-  <img src="https://imgur.com/a/86epSTI" alt="Logo" width="80" height="80">
+  <img src="https://user-images.githubusercontent.com/65573413/114147234-5a8f7200-98cd-11eb-85ad-b7e2a08aaaff.png" alt="Logo" width="80" height="80">
 
   <h2 align="center">Blogger</h1>
 
@@ -19,7 +18,7 @@
 
 ## About The Project
 
-![gif](https://imgur.com/a/7psrsjk)
+![gif](https://gfycat.com/secondarybravehound.gif)
 
 Blog Application where users can create, like, and comment on blog posts. Developed a RESTful API and user authentication system using JWT. The site is hosted on AWS Elastic Beanstalk in a Multi-Container Configuration. NGINX web server serves client / static content and reverse proxies requests to server.
 
