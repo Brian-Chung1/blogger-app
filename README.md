@@ -25,7 +25,7 @@ Blog Application where users can create, like, and comment on blog posts. Develo
 ### Built With
 
 Project is built with MERN (MongoDB, Express, React, Node) \
-User Authentication System is using JWT
+User Authentication System is using JWT \
 Other libraries used
 
 - [Material UI](https://github.com/mui-org/material-ui)
