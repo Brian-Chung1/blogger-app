@@ -79,5 +79,5 @@ To install and run the website locally, a MongoDB Atlas Connection URI and JWT S
 
 ## Contact
 
-Brian Chung - brian.chung.cs@gmail.com
+Brian Chung - brian.chung.cs@gmail.com \
 Project Link: https://www.bloggers.codes
