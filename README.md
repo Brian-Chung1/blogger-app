@@ -2,7 +2,7 @@
 <p align="center">
   <img src="https://user-images.githubusercontent.com/65573413/114147234-5a8f7200-98cd-11eb-85ad-b7e2a08aaaff.png" alt="Logo" width="95" height="95">
 
-  <h2 align="center">Blogger</h1>
+  <h1 align="center">Blogger</h1>
 
   <p align="center">
     A Social Media / Blogging Application
