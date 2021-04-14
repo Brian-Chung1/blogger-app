@@ -1,8 +1,8 @@
 <br />
 <p align="center">
-  <img src="https://user-images.githubusercontent.com/65573413/114147234-5a8f7200-98cd-11eb-85ad-b7e2a08aaaff.png" alt="Logo" width="80" height="80">
+  <img src="https://user-images.githubusercontent.com/65573413/114147234-5a8f7200-98cd-11eb-85ad-b7e2a08aaaff.png" alt="Logo" width="95" height="95">
 
-  <h2 align="center">Blogger</h1>
+  <h1 align="center">Blogger</h1>
 
   <p align="center">
     A Social Media / Blogging Application
@@ -18,14 +18,14 @@
 
 ## About The Project
 
-![gif](https://gfycat.com/secondarybravehound.gif)
+![bloggerdemo](https://user-images.githubusercontent.com/65573413/114148783-01284280-98cf-11eb-8317-672c969cb9ea.gif)
 
 Blog Application where users can create, like, and comment on blog posts. Developed a RESTful API and user authentication system using JWT. The site is hosted on AWS Elastic Beanstalk in a Multi-Container Configuration. NGINX web server serves client / static content and reverse proxies requests to server.
 
 ### Built With
 
-Project is built with MERN (MongoDB, Express, React, Node)
-User Authentication System is using JWT
+Project is built with MERN (MongoDB, Express, React, Node) \
+User Authentication System is using JWT \
 Other libraries used
 
 - [Material UI](https://github.com/mui-org/material-ui)
@@ -79,5 +79,5 @@ To install and run the website locally, a MongoDB Atlas Connection URI and JWT S
 
 ## Contact
 
-Brian Chung - brian.chung.cs@gmail.com
+Brian Chung - brian.chung.cs@gmail.com \
 Project Link: https://www.bloggers.codes
