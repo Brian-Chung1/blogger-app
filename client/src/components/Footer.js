@@ -25,15 +25,33 @@ const Footer = () => {
   return (
     <footer className={classes.footer}>
       <Container maxWidth="sm" className={classes.centered}>
-        <IconButton href={'https://github.com/Brian-Chung1/blogger-app'}>
-          <GitHubIcon />
-        </IconButton>
-        <IconButton href={'https://www.linkedin.com/in/brian-chung-a2a72b196/'}>
-          <LinkedInIcon />
-        </IconButton>
-        <IconButton href={'mailto:brian.chung.cs@gmail.com'}>
-          <EmailIcon />
-        </IconButton>
+        <a
+          href={'https://github.com/Brian-Chung1/blogger-app'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconButton>
+            <GitHubIcon />
+          </IconButton>
+        </a>
+        <a
+          href={'https://www.linkedin.com/in/brian-chung-a2a72b196/'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconButton>
+            <LinkedInIcon />
+          </IconButton>
+        </a>
+        <a
+          href={'mailto:brian.chung.cs@gmail.com'}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <IconButton>
+            <EmailIcon />
+          </IconButton>
+        </a>
         <Typography variant="button" className={classes.email}>
           brian.chung.cs@gmail.com
         </Typography>
