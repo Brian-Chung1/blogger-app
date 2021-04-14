@@ -45,12 +45,12 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
-  overflow: {
-    overflowWrap: 'break-word',
-    wordWrap: 'break-word',
-    hyphens: 'auto',
-    lineBreak: 'anywhere',
-  },
+  // overflow: {
+  //   // overflowWrap: 'break-word',
+  //   // wordWrap: 'break-word',
+  //   // hyphens: 'auto',
+  //   // lineBreak: 'anywhere',
+  // },
   headerRight: {
     marginLeft: 'auto',
   },
