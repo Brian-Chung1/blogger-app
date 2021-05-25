@@ -35,7 +35,7 @@ const Footer = () => {
           </IconButton>
         </a>
         <a
-          href={'https://www.linkedin.com/in/brian-chung-a2a72b196/'}
+          href={'https://www.linkedin.com/in/brian-chung1/'}
           target="_blank"
           rel="noopener noreferrer"
         >
