@@ -78,6 +78,34 @@ userSchema.methods = {
       return;
     }
   },
+  generateGuestAccessToken: async function () {
+    try {
+      const { _id, username } = this;
+      let guestToken = jwt.sign(
+        { type: 'guest', username: username, id: _id },
+        config.ACCESS_TOKEN_SECRET,
+        { expiresIn: '20m' }
+      );
+      return guestToken;
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+  },
+  generateGuestRefreshToken: async function () {
+    try {
+      const { _id, username } = this;
+      let refreshToken = jwt.sign(
+        { type: 'guest', username: username, id: _id },
+        config.REFRESH_TOKEN_SECRET,
+        { expiresIn: '1d' }
+      );
+      return refreshToken;
+    } catch (err) {
+      console.error(err);
+      return;
+    }
+  },
 };
 
 userSchema.set('toJSON', {

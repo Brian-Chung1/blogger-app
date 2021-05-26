@@ -33,11 +33,17 @@ const logout = async () => {
   return response.data;
 };
 
+const guestLogin = async () => {
+  const response = await authInstance.post(`${baseUrl}/guest`);
+  return response.data;
+};
+
 const authService = {
   login,
   register,
   refresh,
   logout,
+  guestLogin,
 };
 
 export default authService;

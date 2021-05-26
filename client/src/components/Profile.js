@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
   filter: {
     width: theme.spacing(20),
   },
+  username: {
+    minWidth: '100px',
+  },
 }));
 
 const Profile = ({ handleLikes }) => {
@@ -89,7 +92,7 @@ const Profile = ({ handleLikes }) => {
     <Grid container>
       <Grid item xs={false} sm={2} />
 
-      <Grid item xs={12} sm={8}>
+      <Grid item xs={12} sm={12} md={8}>
         <Paper className={classes.main}>
           <Avatar
             className={classes.avatar}
@@ -97,9 +100,11 @@ const Profile = ({ handleLikes }) => {
           >
             {username.charAt(0)}
           </Avatar>
-          <Typography variant="h2" component="h1">
-            {username}
-          </Typography>
+          <div className={classes.username}>
+            <Typography variant="h2" component="h1" noWrap>
+              {username}
+            </Typography>
+          </div>
           <div>
             <Typography variant="h6">{`User since ${dateFormatter(
               created

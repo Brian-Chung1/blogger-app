@@ -5,5 +5,6 @@ authRouter.post('/login', auth.login);
 authRouter.post('/register', auth.register);
 authRouter.post('/refresh', auth.refreshAccessToken);
 authRouter.post('/logout', auth.logout);
+authRouter.post('/guest', auth.guestLogin);
 
 module.exports = authRouter;

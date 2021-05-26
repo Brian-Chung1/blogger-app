@@ -113,10 +113,18 @@ const refreshAccessToken = async (req, res, next) => {
     if (!refreshToken) {
       res.status(403).json({ error: 'missing token' });
     } else {
+      const guestPayload = jwt.verify(
+        refreshToken,
+        config.REFRESH_TOKEN_SECRET
+      );
+      if (guestPayload.type === 'guest') {
+        const guest = await User.findById(guestPayload.id);
+        await guest.remove();
+        return res.status(401).json({ error: 'guest session expired' });
+      }
       const tokenDB = await Token.findOne({ token: refreshToken });
-
       if (!tokenDB) {
-        res.status(401).json({ error: 'expired token' });
+        return res.status(401).json({ error: 'expired token' });
       } else {
         const payload = jwt.verify(tokenDB.token, config.REFRESH_TOKEN_SECRET);
         const newAccessToken = jwt.sign(
@@ -136,6 +144,12 @@ const refreshAccessToken = async (req, res, next) => {
 const logout = async (req, res, next) => {
   try {
     const { refreshToken } = req.cookies;
+    const payload = jwt.verify(refreshToken, config.REFRESH_TOKEN_SECRET);
+    if (payload.type === 'guest') {
+      const guest = await User.findById(payload.id);
+      await guest.remove();
+      return res.status(200).json({ message: 'guest user logged out' });
+    }
     await Token.findOneAndDelete({ token: refreshToken });
     return res.status(200).json({ message: 'user logged out' });
   } catch (err) {
@@ -144,9 +158,52 @@ const logout = async (req, res, next) => {
   }
 };
 
+const guestLogin = async (req, res, next) => {
+  const generateRandomID = () =>
+    new Date().getTime().toString(36) + Math.random().toString(36).slice(30);
+
+  try {
+    const randomID = generateRandomID();
+    const username = `Guest${randomID}`;
+    const password = randomID;
+    const email = `${username}@guest.com`;
+
+    const saltRounds = await bcrypt.genSalt(12);
+    const passwordHash = await bcrypt.hash(password, saltRounds);
+
+    const user = new User({
+      username,
+      email,
+      passwordHash,
+      created: new Date(),
+    });
+
+    const savedUser = await user.save();
+
+    let guestAccessToken = await user.generateGuestAccessToken();
+    let guestRefreshToken = await user.generateGuestRefreshToken();
+
+    res.cookie('refreshToken', guestRefreshToken, {
+      maxAge: 1000 * 60 * 60 * 24,
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+    });
+
+    res.status(200).json({
+      accessToken: guestAccessToken,
+      username: savedUser.username,
+      id: savedUser._id,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 module.exports = {
   login,
   register,
   refreshAccessToken,
   logout,
+  guestLogin,
 };

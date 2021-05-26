@@ -108,6 +108,21 @@ const Header = ({ notifications, handleNotificationRemoval }) => {
     });
   };
 
+  const handleGuestLogin = async () => {
+    const user = await authService.guestLogin();
+    window.localStorage.setItem('blogAppUser', JSON.stringify(user));
+    setUser(user);
+    history.push('/');
+    dispatchNotification({
+      type: 'ADD',
+      data: {
+        open: true,
+        severity: 'success',
+        message: 'Successfully logged in as a guest',
+      },
+    });
+  };
+
   if (user) {
     return (
       <>
@@ -276,6 +291,13 @@ const Header = ({ notifications, handleNotificationRemoval }) => {
             <Button
               color="inherit"
               variant="outlined"
+              onClick={handleGuestLogin}
+            >
+              Guest Sign In
+            </Button>
+            <Button
+              color="inherit"
+              variant="outlined"
               className={classes.headerSpacing}
               onClick={() => history.push('/login')}
             >
@@ -305,6 +327,9 @@ const Header = ({ notifications, handleNotificationRemoval }) => {
         open={mobileOpen}
         onClose={handleMobileMenuClose}
       >
+        <MenuItem onClick={handleGuestLogin}>
+          <p>Guest Sign In</p>
+        </MenuItem>
         <MenuItem onClick={() => history.push('/login')}>
           <p>Login</p>
         </MenuItem>
